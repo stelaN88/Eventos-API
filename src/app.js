@@ -1,6 +1,6 @@
 const express = require('express');
-const mongoSanitize = require('express-mongo-sanitize');
 require('dotenv').config();
+const path = require('path');
 
 const authRoutes = require('./routes/authRoutes');
 const eventoRoutes = require('./routes/eventoRoutes');
@@ -8,13 +8,29 @@ const eventoRoutes = require('./routes/eventoRoutes');
 const app = express();
 
 app.use(express.json());
-app.use(mongoSanitize()); // Proteção contra NoSQL Injection
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
+
+app.use((req, res, next) => {
+  const sanitizar = (obj) => {
+    if (obj && typeof obj === 'object') {
+      for (const key in obj) {
+        if (key.startsWith('$') || key.includes('.')) {
+          delete obj[key];
+        } else {
+          sanitizar(obj[key]);
+        }
+      }
+    }
+  };
+  sanitizar(req.body);
+  sanitizar(req.query);
+  sanitizar(req.params);
+  next();
+});
 
 app.use('/api/auth', authRoutes);
 app.use('/api/eventos', eventoRoutes);
 
-app.get('/', (req, res) => {
-  res.json({ mensagem: 'Bem-vindo à Eventos-API!' });
-});
 
 module.exports = app;
