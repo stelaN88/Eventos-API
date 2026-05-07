@@ -16,9 +16,11 @@ exports.registrar = async (req, res) => {
     const token = gerarToken(usuario._id);
     res.status(201).json({ mensagem: 'Usuário criado com sucesso!', token });
   } catch (error) {
+    console.error('ERRO REGISTRAR:', error);
     res.status(500).json({ erro: error.message });
   }
 };
+
 
 exports.login = async (req, res) => {
   try {
