@@ -1,10 +1,27 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
+/**
+ * Gera um token JWT para o usuário autenticado.
+ * @param {string} id - ID do usuário no MongoDB
+ * @returns {string} Token JWT com validade de 7 dias
+ */
 const gerarToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 };
 
+/**
+ * Registra um novo usuário na aplicação.
+ * Verifica se o e-mail já está cadastrado antes de criar o usuário.
+ * Em caso de sucesso, retorna o token JWT gerado.
+ * @async
+ * @param {Object} req - Objeto de requisição do Express
+ * @param {string} req.body.nome - Nome do usuário
+ * @param {string} req.body.email - E-mail do usuário
+ * @param {string} req.body.senha - Senha do usuário
+ * @param {Object} res - Objeto de resposta do Express
+ * @returns {Promise<void>}
+ */
 exports.registrar = async (req, res) => {
   try {
     const { nome, email, senha } = req.body;
@@ -20,6 +37,17 @@ exports.registrar = async (req, res) => {
   }
 };
 
+/**
+ * Realiza o login do usuário.
+ * Verifica se o e-mail existe e se a senha está correta.
+ * Em caso de sucesso, retorna o token JWT gerado.
+ * @async
+ * @param {Object} req - Objeto de requisição do Express
+ * @param {string} req.body.email - E-mail do usuário
+ * @param {string} req.body.senha - Senha do usuário
+ * @param {Object} res - Objeto de resposta do Express
+ * @returns {Promise<void>}
+ */
 exports.login = async (req, res) => {
   try {
     const { email, senha } = req.body;
