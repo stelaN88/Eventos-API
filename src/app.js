@@ -20,4 +20,13 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile)); // ← rota
 app.use('/api/auth', authRoutes);
 app.use('/api/eventos', eventoRoutes);
 
+const categoriaRoutes = require('./routes/categoriaRoutes'); 
+
+
+app.get('/api/status', (req, res) => {              
+  res.json({ versao: '2.0.0', status: 'online' });  
+});                                                  
+
+app.use('/api/categorias', categoriaRoutes);         
+
 module.exports = app;
