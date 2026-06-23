@@ -3,6 +3,10 @@ const express = require('express');
 const path = require('path');
 require('dotenv').config();
 
+const produtosRoutes = require('./routes/produtosRoutes');
+const clientesRoutes = require('./routes/clientesRoutes');
+const pedidosRoutes  = require('./routes/pedidosRoutes');
+
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('../swagger-output.json'); // ← importa o JSON gerado
 
@@ -28,5 +32,10 @@ app.get('/api/status', (req, res) => {
 });                                                  
 
 app.use('/api/categorias', categoriaRoutes);         
+
+app.use('/api/categorias', categoriaRoutes);
+app.use('/api/produtos', produtosRoutes);
+app.use('/api/clientes', clientesRoutes);
+app.use('/api/pedidos', pedidosRoutes);
 
 module.exports = app;
