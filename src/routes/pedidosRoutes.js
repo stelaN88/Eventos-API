@@ -4,7 +4,7 @@ const router = express.Router();
 const autenticar = require('../middlewares/auth');
 const c = require('../controllers/pedidoController');
 
-router.use(autenticar); // todas as rotas exigem token + X-User-Id
+router.use(autenticar); 
 
 router.get('/',       c.listar);
 router.get('/:id',    c.buscarPorId);

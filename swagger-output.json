@@ -5,8 +5,8 @@
     "description": "Documentação da API REST",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
-  "basePath": "/",
+  "host": "eventos-api-t9kw.onrender.com",
+  "basePath": "/api",
   "schemes": [
     "http"
   ],
@@ -91,19 +91,30 @@
     },
     "/": {
       "get": {
-        "summary": "Lista todos os eventos",
         "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Lista de eventos retornada com sucesso"
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
-            "description": "Erro interno no servidor"
+            "description": "Internal Server Error"
           }
         }
       },
       "post": {
-        "summary": "Cria um novo evento",
         "description": "",
         "parameters": [
           {
@@ -114,25 +125,20 @@
           {
             "name": "body",
             "in": "body",
-            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "nome": {
-                  "type": "string",
-                  "example": "Show de Rock"
+                  "example": "any"
                 },
-                "descricao": {
-                  "type": "string",
-                  "example": "Descrição do evento"
+                "valor": {
+                  "example": "any"
                 },
-                "data": {
-                  "type": "string",
-                  "example": "2025-12-01"
+                "estoque": {
+                  "example": "any"
                 },
-                "local": {
-                  "type": "string",
-                  "example": "São Paulo"
+                "categorias_id_categoria": {
+                  "example": "any"
                 }
               }
             }
@@ -140,13 +146,16 @@
         ],
         "responses": {
           "201": {
-            "description": "Evento criado com sucesso"
+            "description": "Created"
           },
           "400": {
-            "description": "Dados inválidos"
+            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"
@@ -156,23 +165,32 @@
     },
     "/{id}": {
       "get": {
-        "summary": "Busca evento por ID",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "ID do evento"
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Evento encontrado com sucesso"
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
-            "description": "Evento não encontrado"
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -180,15 +198,13 @@
         }
       },
       "put": {
-        "summary": "Atualiza um evento existente",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "ID do evento"
+            "type": "string"
           },
           {
             "name": "authorization",
@@ -198,25 +214,20 @@
           {
             "name": "body",
             "in": "body",
-            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "nome": {
-                  "type": "string",
-                  "example": "Show de Rock Atualizado"
+                  "example": "any"
                 },
-                "descricao": {
-                  "type": "string",
-                  "example": "Nova descrição"
+                "valor": {
+                  "example": "any"
                 },
-                "data": {
-                  "type": "string",
-                  "example": "2025-12-10"
+                "estoque": {
+                  "example": "any"
                 },
-                "local": {
-                  "type": "string",
-                  "example": "Rio de Janeiro"
+                "categorias_id_categoria": {
+                  "example": "any"
                 }
               }
             }
@@ -224,7 +235,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Evento atualizado com sucesso"
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
@@ -233,7 +247,7 @@
             "description": "Forbidden"
           },
           "404": {
-            "description": "Evento não encontrado"
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -241,15 +255,13 @@
         }
       },
       "delete": {
-        "summary": "Deleta um evento",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "ID do evento"
+            "type": "string"
           },
           {
             "name": "authorization",
@@ -259,7 +271,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Evento deletado com sucesso"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -268,7 +280,7 @@
             "description": "Forbidden"
           },
           "404": {
-            "description": "Evento não encontrado"
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -292,6 +304,11 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -303,6 +320,9 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
             "description": "Evento não encontrado"

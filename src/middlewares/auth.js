@@ -13,7 +13,6 @@ const autenticar = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.usuario = decoded;
 
-    // ← validação extra exigida pelo professor
     const idInformado = req.headers['x-user-id'];
     if (!idInformado)
       return res.status(403).json({ erro: 'X-User-Id não informado no header.' });
