@@ -8,7 +8,7 @@
   "host": "eventos-api-t9kw.onrender.com",
   "basePath": "/api",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/registrar": {

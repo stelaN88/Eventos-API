@@ -7,7 +7,7 @@ const doc = {
   },
   host: 'eventos-api-t9kw.onrender.com',
   basePath: '/api',
-  schemes: ['http'],
+  schemes: ['https'],
 };
 
 const outputFile = './swagger-output.json';
